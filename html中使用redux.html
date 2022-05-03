@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+    <script>
+      const { createStore } = Redux;
+      // 3. 初始化state
+      const initState = {
+        todo: [],
+        post: [],
+      };
+      // 2. 创建reducer
+      function myReducer(state = initState, action) {
+        if (action.type == "ADD_POST") {
+          return {
+            ...state,
+            post: [...state.post, action.post],
+          };
+        }
+        if (action.type == "ADD_TODO") {
+          return {
+            ...state,
+            todo: [...state.todo, action.todo],
+          };
+        }
+      }
+      // 1. 创建store
+      const store = createStore(myReducer);
+
+      // 6. 订阅store
+      store.subscribe(() => {
+        console.log("state已经更新", store.getState());
+      });
+      // 4. 设置action 是一个js对象
+      const postAction = {
+        type: "ADD_POST",
+        post: "我的第一篇博客",
+      };
+      store.dispatch({type:'ADD_TODO',todo:'打扫卫生'});
+      store.dispatch({type:'ADD_POST',post:'我的第一篇博客'});
+      store.dispatch({type:'ADD_POST',post:'我的第二篇博客'});
+
+
+    </script>
+  </body>
+</html>
